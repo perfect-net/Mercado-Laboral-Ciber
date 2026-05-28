@@ -2,154 +2,55 @@ import { useState } from "react";
 import { roles } from "../data/roles";
 
 const blocks = [
-  { num: 1, name: "Operaciones de Defensa", icon: "🛡️", color: "from-cyan-500 to-blue-600" },
-  { num: 2, name: "Identidad, Nube e Infra", icon: "☁️", color: "from-blue-500 to-indigo-600" },
-  { num: 3, name: "Ofensiva y Red Team", icon: "⚔️", color: "from-fuchsia-500 to-purple-600" },
-  { num: 4, name: "DFIR e Inteligencia", icon: "🔍", color: "from-red-500 to-rose-600" },
-  { num: 5, name: "Ingeniería, AppSec e IA", icon: "⚙️", color: "from-emerald-500 to-teal-600" },
-  { num: 6, name: "Gobernanza y Dirección", icon: "⚖️", color: "from-amber-500 to-orange-600" },
+  { num: 1, name: "Operaciones de Defensa", dot: "bg-sky-400", text: "text-sky-400/90", glow: "shadow-sky-400/40" },
+  { num: 2, name: "Identidad, Nube e Infra", dot: "bg-indigo-400", text: "text-indigo-400/90", glow: "shadow-indigo-400/40" },
+  { num: 3, name: "Ofensiva y Red Team", dot: "bg-rose-400", text: "text-rose-400/90", glow: "shadow-rose-400/40" },
+  { num: 4, name: "DFIR e Inteligencia", dot: "bg-amber-400", text: "text-amber-400/90", glow: "shadow-amber-400/40" },
+  { num: 5, name: "Ingeniería, AppSec e IA", dot: "bg-emerald-400", text: "text-emerald-400/90", glow: "shadow-emerald-400/40" },
+  { num: 6, name: "Gobernanza y Dirección", dot: "bg-orange-400", text: "text-orange-400/90", glow: "shadow-orange-400/40" },
 ];
+
+function NL({ href, children, onClick }: { href: string; children: React.ReactNode; onClick: () => void }) {
+  return <a href={href} onClick={onClick} className="block px-4 py-1.5 text-xs text-slate-500 hover:text-slate-200 hover:bg-white/[0.03] rounded-md transition-colors">{children}</a>;
+}
 
 export function Sidebar() {
   const [open, setOpen] = useState(false);
-
+  const close = () => setOpen(false);
   return (
     <>
-      {/* Mobile toggle */}
-      <button
-        onClick={() => setOpen(!open)}
-        className="lg:hidden fixed top-4 right-4 z-50 bg-slate-900 border border-slate-700 text-white p-3 rounded-xl shadow-xl"
-        aria-label="Menú"
-      >
-        {open ? "✕" : "☰"}
+      <button onClick={() => setOpen(!open)} className="lg:hidden fixed top-5 right-5 z-50 w-10 h-10 flex items-center justify-center bg-[#0a0d15]/90 backdrop-blur border border-white/10 text-slate-300 rounded-lg shadow-xl" aria-label="Menú">
+        {open ? <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg> : <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2"><line x1="4" y1="7" x2="20" y2="7"/><line x1="4" y1="12" x2="20" y2="12"/><line x1="4" y1="17" x2="20" y2="17"/></svg>}
       </button>
-
-      <aside
-        className={`fixed lg:sticky top-0 left-0 h-screen w-80 bg-slate-950 border-r border-slate-800 overflow-y-auto z-40 transition-transform ${
-          open ? "translate-x-0" : "-translate-x-full lg:translate-x-0"
-        }`}
-      >
-        <div className="p-6 border-b border-slate-800">
-          <div className="text-[10px] font-mono text-cyan-400 tracking-widest mb-1">INFORME · 2026</div>
-          <h1 className="text-lg font-bold text-white leading-tight">
-            Estudio Maestro
-            <br />
-            <span className="text-cyan-400">Ciberseguridad</span>
-          </h1>
+      {open && <div className="fixed inset-0 bg-black/60 z-30 lg:hidden" onClick={close} />}
+      <aside className={`fixed lg:sticky top-0 left-0 h-screen w-72 bg-[#060810] border-r border-white/[0.04] overflow-y-auto z-40 transition-transform duration-300 ${open ? "translate-x-0" : "-translate-x-full lg:translate-x-0"}`}>
+        <div className="px-6 py-6 border-b border-white/[0.04]">
+          <div className="text-[9px] font-mono font-bold text-slate-600 tracking-[0.3em] uppercase mb-2">Informe · 2026</div>
+          <div className="text-base font-bold text-white tracking-tight leading-snug">Estudio Maestro<br /><span className="text-transparent bg-clip-text bg-gradient-to-r from-sky-300 to-indigo-300">Ciberseguridad</span></div>
         </div>
-
-        <nav className="p-4 space-y-1">
-          <a
-            href="#intro"
-            onClick={() => setOpen(false)}
-            className="block px-3 py-2 text-sm text-slate-300 hover:text-white hover:bg-slate-900 rounded-lg"
-          >
-            🏠 Resumen Ejecutivo
-          </a>
-          <a
-            href="#metodologia"
-            onClick={() => setOpen(false)}
-            className="block px-3 py-2 text-sm text-slate-300 hover:text-white hover:bg-slate-900 rounded-lg"
-          >
-            📐 Metodología
-          </a>
-          <a
-            href="#comparativas"
-            onClick={() => setOpen(false)}
-            className="block px-3 py-2 text-sm text-slate-300 hover:text-white hover:bg-slate-900 rounded-lg"
-          >
-            📊 Comparativas
-          </a>
-
-          <div className="pt-3 pb-1 px-3 text-[10px] font-mono uppercase text-slate-500 tracking-widest">
-            Parte 1 · Fichas Técnicas
-          </div>
-
-          {blocks.map((b) => (
-            <div key={b.num} className="mb-2">
-              <a
-                href={`#bloque-${b.num}`}
-                onClick={() => setOpen(false)}
-                className={`block px-3 py-2 rounded-lg text-xs font-semibold text-white bg-gradient-to-r ${b.color} mb-1`}
-              >
-                BLOQUE {b.num} — {b.name}
+        <nav className="p-4 space-y-0.5">
+          <NL href="#intro" onClick={close}>Resumen Ejecutivo</NL>
+          <NL href="#metodologia" onClick={close}>Metodología</NL>
+          <NL href="#comparativas" onClick={close}>Panel Comparativo</NL>
+          <div className="pt-4 pb-1 px-4 text-[8px] font-mono font-bold uppercase text-slate-600 tracking-[0.2em]">Fichas Técnicas</div>
+          {blocks.map(b => (
+            <div key={b.num} className="mb-1.5">
+              <a href={`#bloque-${b.num}`} onClick={close} className={`flex items-center gap-2.5 px-4 py-1.5 text-xs font-semibold ${b.text} hover:text-white hover:bg-white/[0.04] rounded-md transition-colors`}>
+                <span className={`w-1.5 h-1.5 rounded-full ${b.dot} shadow-[0_0_5px] ${b.glow}`} />{b.name}
               </a>
-              <ul className="pl-3 space-y-0.5 border-l border-slate-800 ml-2">
-                {roles
-                  .filter((r) => r.block === b.num)
-                  .map((r) => (
-                    <li key={r.id}>
-                      <a
-                        href={`#${r.id}`}
-                        onClick={() => setOpen(false)}
-                        className="block pl-3 py-1 text-xs text-slate-400 hover:text-cyan-300 transition-colors"
-                      >
-                        {r.shortName}
-                      </a>
-                    </li>
-                  ))}
-              </ul>
+              <div className="ml-8 border-l border-white/[0.04] pl-3 space-y-0 mt-0.5">
+                {roles.filter(r => r.block === b.num).map(r => <a key={r.id} href={`#${r.id}`} onClick={close} className="block py-[3px] text-[11px] text-slate-600 hover:text-slate-300 transition-colors">{r.shortName}</a>)}
+              </div>
             </div>
           ))}
-
-          <div className="pt-3 pb-1 px-3 text-[10px] font-mono uppercase text-slate-500 tracking-widest">
-            Parte 2 · Roadmaps
-          </div>
-          {blocks.map((b) => (
-            <a
-              key={b.num}
-              href={`#roadmap-${b.num}`}
-              onClick={() => setOpen(false)}
-              className="block px-3 py-2 text-sm text-slate-300 hover:text-white hover:bg-slate-900 rounded-lg flex items-center gap-2"
-            >
-              <span className="text-base">{b.icon}</span>
-              <span>{b.name}</span>
-            </a>
-          ))}
-
-          <div className="pt-3 pb-1 px-3 text-[10px] font-mono uppercase text-slate-500 tracking-widest">
-            Parte 3 · Estrategia
-          </div>
-          <a
-            href="#mercado-oculto"
-            onClick={() => setOpen(false)}
-            className="block px-3 py-2 text-sm text-slate-300 hover:text-white hover:bg-slate-900 rounded-lg"
-          >
-            🕵️ Mercado Oculto
-          </a>
-          <a
-            href="#career-paths"
-            onClick={() => setOpen(false)}
-            className="block px-3 py-2 text-sm text-slate-300 hover:text-white hover:bg-slate-900 rounded-lg"
-          >
-            🚀 Mapa de Progresión
-          </a>
-          <a
-            href="#conclusion"
-            onClick={() => setOpen(false)}
-            className="block px-3 py-2 text-sm text-slate-300 hover:text-white hover:bg-slate-900 rounded-lg"
-          >
-            📝 Conclusión
-          </a>
-
-          <div className="pt-3 pb-1 px-3 text-[10px] font-mono uppercase text-slate-500 tracking-widest">
-            Referencia
-          </div>
-          <a
-            href="#glosario"
-            onClick={() => setOpen(false)}
-            className="block px-3 py-2 text-sm text-slate-300 hover:text-white hover:bg-slate-900 rounded-lg"
-          >
-            📖 Glosario Técnico
-          </a>
+          <div className="pt-4 pb-1 px-4 text-[8px] font-mono font-bold uppercase text-slate-600 tracking-[0.2em]">Roadmaps</div>
+          {blocks.map(b => <a key={b.num} href={`#roadmap-${b.num}`} onClick={close} className={`flex items-center gap-2.5 px-4 py-1.5 text-xs ${b.text} opacity-70 hover:opacity-100 hover:bg-white/[0.03] rounded-md transition-all`}><span className={`w-1 h-1 rounded-full ${b.dot}`} />{b.name}</a>)}
+          <div className="pt-4 pb-1 px-4 text-[8px] font-mono font-bold uppercase text-slate-600 tracking-[0.2em]">Estrategia</div>
+          <NL href="#mercado-oculto" onClick={close}>Mercado Oculto</NL>
+          <NL href="#career-paths" onClick={close}>Progresión Profesional</NL>
+          <NL href="#conclusion" onClick={close}>Conclusiones</NL>
+          <NL href="#glosario" onClick={close}>Glosario Técnico</NL>
         </nav>
-
-        <div className="p-6 border-t border-slate-800 mt-4">
-          <p className="text-[10px] text-slate-500 leading-relaxed">
-            Informe sectorial elaborado con datos de mercado de España, LATAM y Eurozona. Cifras orientativas basadas en
-            agregadores de ofertas (InfoJobs, LinkedIn, Glassdoor) y entrevistas con headhunters Q4 2025–Q1 2026.
-          </p>
-        </div>
       </aside>
     </>
   );

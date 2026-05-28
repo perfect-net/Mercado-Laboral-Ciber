@@ -9,224 +9,106 @@ import { OffensiveProgression } from "./components/OffensiveProgression";
 import { ScrollToTop } from "./components/ScrollToTop";
 import { Glossary } from "./components/Glossary";
 
-const blockMeta = [
-  {
-    num: 1,
-    title: "Operaciones de Defensa y Primera Línea",
-    subtitle: "El primer muro: monitorización, detección y respuesta operativa 24/7.",
-    gradient: "from-cyan-600 via-blue-700 to-slate-900",
-  },
-  {
-    num: 2,
-    title: "Identidad, Nube e Infraestructura Crítica",
-    subtitle: "Los pilares modernos: control de accesos, seguridad cloud-native y entornos industriales.",
-    gradient: "from-blue-600 via-indigo-700 to-slate-900",
-  },
-  {
-    num: 3,
-    title: "Seguridad Ofensiva y Red Team",
-    subtitle: "Pentesting, aplicaciones, operaciones Red Team, emulación adversaria, purple team y liderazgo ofensivo.",
-    gradient: "from-fuchsia-600 via-purple-700 to-slate-900",
-  },
-  {
-    num: 4,
-    title: "DFIR, Inteligencia y Gestión de Exposición",
-    subtitle: "Respuesta a incidentes, forense, inteligencia de amenazas, malware y priorización de vulnerabilidades.",
-    gradient: "from-red-600 via-rose-700 to-slate-900",
-  },
-  {
-    num: 5,
-    title: "Ingeniería, Desarrollo Seguro, IA y Arquitectura",
-    subtitle: "Construir seguridad: pipelines, código, modelos de IA y diseño corporativo.",
-    gradient: "from-emerald-600 via-teal-700 to-slate-900",
-  },
-  {
-    num: 6,
-    title: "Gobernanza, Riesgo, Terceros y Dirección",
-    subtitle: "El nivel estratégico: normativa, terceros y liderazgo ante el board.",
-    gradient: "from-amber-600 via-orange-700 to-slate-900",
-  },
+const blocks = [
+  { num: 1, title: "Operaciones de Defensa y Primera Línea", sub: "Monitorización, detección y respuesta operativa 24/7.", tag: "text-sky-400/80", strip: "from-sky-500/50" },
+  { num: 2, title: "Identidad, Nube e Infraestructura Crítica", sub: "Control de accesos, seguridad cloud-native y entornos industriales.", tag: "text-indigo-400/80", strip: "from-indigo-500/50" },
+  { num: 3, title: "Seguridad Ofensiva y Red Team", sub: "Pentesting, aplicaciones, Red Team, emulación adversaria y liderazgo ofensivo.", tag: "text-rose-400/80", strip: "from-rose-500/50" },
+  { num: 4, title: "DFIR, Inteligencia y Gestión de Exposición", sub: "Respuesta a incidentes, forense, inteligencia de amenazas y priorización.", tag: "text-amber-400/80", strip: "from-amber-500/50" },
+  { num: 5, title: "Ingeniería, Desarrollo Seguro, IA y Arquitectura", sub: "Pipelines seguros, código, modelos de IA y diseño corporativo.", tag: "text-emerald-400/80", strip: "from-emerald-500/50" },
+  { num: 6, title: "Gobernanza, Riesgo, Terceros y Dirección", sub: "Normativa, terceros y liderazgo ante el board.", tag: "text-orange-400/80", strip: "from-orange-500/50" },
 ];
 
-function StatPill({ label, value, color }: { label: string; value: string; color: string }) {
-  return (
-    <div className="bg-slate-950/60 border border-slate-800 rounded-xl p-4">
-      <div className="text-[10px] uppercase tracking-widest text-slate-500 font-mono mb-1">{label}</div>
-      <div className={`text-2xl md:text-3xl font-bold ${color}`}>{value}</div>
-    </div>
-  );
+function SL({ n, t }: { n: string; t: string }) {
+  return <div><div className="text-[9px] font-mono font-bold text-slate-500 tracking-[0.25em] uppercase mb-2">Parte {n}</div><h2 className="text-3xl md:text-4xl font-bold text-white tracking-tight">{t}</h2></div>;
 }
 
 export default function App() {
-  const avgScarcity = (roles.reduce((sum, role) => sum + role.scarcityValue, 0) / roles.length).toFixed(1);
+  const avgSc = (roles.reduce((s, r) => s + r.scarcityValue, 0) / roles.length).toFixed(1);
 
   return (
-    <div className="min-h-screen bg-slate-950 text-slate-200 font-sans antialiased">
+    <div className="min-h-screen bg-[#060810] text-slate-300 antialiased noise-bg">
       <ScrollToTop />
-      {/* Grid bg */}
-      <div
-        aria-hidden
-        className="fixed inset-0 -z-10 opacity-[0.04]"
-        style={{
-          backgroundImage:
-            "linear-gradient(rgba(255,255,255,0.6) 1px, transparent 1px), linear-gradient(90deg, rgba(255,255,255,0.6) 1px, transparent 1px)",
-          backgroundSize: "48px 48px",
-        }}
-      />
-      <div
-        aria-hidden
-        className="fixed inset-0 -z-10 bg-gradient-to-br from-cyan-950/20 via-slate-950 to-fuchsia-950/20"
-      />
-
       <div className="flex">
         <Sidebar />
+        <main className="flex-1 min-w-0 relative z-10">
 
-        <main className="flex-1 max-w-5xl mx-auto px-4 md:px-10 py-8 md:py-16 lg:ml-0">
           {/* HERO */}
-          <section id="intro" className="mb-16">
-            <div className="inline-block mb-4">
-              <span className="text-[10px] font-mono uppercase tracking-[0.3em] text-cyan-400 border border-cyan-900/60 bg-cyan-950/30 px-3 py-1.5 rounded-full">
-                Informe Sectorial · Edición 2026
-              </span>
-            </div>
-            <h1 className="text-4xl md:text-6xl font-black text-white leading-[1.05] tracking-tight">
-              Estudio Maestro del Mercado Laboral
-              <br />
-              <span className="bg-gradient-to-r from-cyan-400 via-fuchsia-400 to-amber-400 bg-clip-text text-transparent">
-                y Hojas de Ruta en Ciberseguridad
-              </span>
-            </h1>
-            <p className="mt-6 text-lg text-slate-400 max-w-3xl leading-relaxed">
-              Radiografía granular del mercado laboral en ciberseguridad para España, LATAM y Eurozona. {roles.length} fichas
-              técnicas por puesto, {blockMeta.length} roadmaps realistas y un análisis estratégico del mercado oculto y los
-              <em className="text-cyan-300"> Sweet Spots</em> de mayor rentabilidad.
-            </p>
-
-            {/* Stats */}
-            <div className="mt-10 grid grid-cols-2 md:grid-cols-4 gap-3">
-              <StatPill label="Puestos analizados" value={String(roles.length)} color="text-cyan-400" />
-              <StatPill label="Bloques sectoriales" value={String(blockMeta.length)} color="text-fuchsia-400" />
-              <StatPill label="Ratio escasez promedio" value={`${avgScarcity}x`} color="text-amber-400" />
-              <StatPill label="Vacantes ocultas (high-level)" value=">40%" color="text-emerald-400" />
-            </div>
-
-            {/* Autoría */}
-            <div className="mt-10 bg-slate-900/40 border border-slate-800 rounded-xl p-5 text-sm text-slate-400">
-              <div className="font-mono text-[10px] text-slate-500 uppercase tracking-widest mb-2">Ficha del informe</div>
-              <div className="grid md:grid-cols-3 gap-4">
-                <div>
-                  <span className="block text-slate-500 text-xs">Autor</span>
-                  <span className="text-slate-200">Analista de Mercado Laboral Tecnológico</span>
-                </div>
-                <div>
-                  <span className="block text-slate-500 text-xs">Cobertura geográfica</span>
-                  <span className="text-slate-200">España, LATAM, Eurozona</span>
-                </div>
-                <div>
-                  <span className="block text-slate-500 text-xs">Fecha de cierre de datos</span>
-                  <span className="text-slate-200">Q1 2026</span>
-                </div>
-              </div>
-            </div>
-          </section>
-
-          {/* Metodología */}
-          <section id="metodologia" className="mb-20 scroll-mt-24">
-            <div className="bg-gradient-to-br from-slate-900/60 to-slate-950 border border-slate-800 rounded-2xl p-8">
-              <h2 className="text-2xl md:text-3xl font-bold text-white mb-4">📐 Metodología</h2>
-              <div className="grid md:grid-cols-2 gap-5 text-sm text-slate-300">
-                <div>
-                  <h4 className="font-bold text-cyan-400 mb-2">Fuentes primarias</h4>
-                  <ul className="space-y-1.5">
-                    <li>▸ Agregación de ofertas de InfoJobs, LinkedIn, Glassdoor, Tecnoempleo (Q4 2025–Q1 2026).</li>
-                    <li>▸ Entrevistas confidenciales con 28 headhunters y 14 CISOs.</li>
-                    <li>▸ Datos públicos de SANS, ISC2 Workforce Study, ENISA Threat Landscape 2025.</li>
-                    <li>▸ Salarios cruzados con Hays Salary Guide y Page Group Cyber Report.</li>
-                  </ul>
-                </div>
-                <div>
-                  <h4 className="font-bold text-fuchsia-400 mb-2">Cómo leer el informe</h4>
-                  <ul className="space-y-1.5">
-                    <li>▸ <strong>Ratio de escasez</strong>: ofertas reales / candidatos cualificados disponibles.</li>
-                    <li>▸ <strong>Burnout (1–10)</strong>: índice clínico ponderando turnos, presión e impacto vital.</li>
-                    <li>▸ <strong>Salarios</strong>: brutos anuales en España, equivalencias para LATAM/EU.</li>
-                    <li>▸ <strong>Realidad cruda</strong>: opinión del analista, sin endulzar.</li>
-                  </ul>
-                </div>
-              </div>
-            </div>
-          </section>
-
-          <ComparisonsSection />
-
-          {/* PARTE 1 — FICHAS TÉCNICAS */}
-          <section className="mb-24">
-            <header className="mb-10 pb-6 border-b-2 border-cyan-900/40">
-              <div className="text-xs font-mono uppercase tracking-[0.3em] text-cyan-400 mb-2">Parte 1</div>
-              <h2 className="text-3xl md:text-5xl font-bold text-white">Fichas Técnicas por Puesto</h2>
-              <p className="text-slate-400 mt-3 max-w-3xl">
-                Análisis individual exhaustivo de los {roles.length} roles del sector, agrupados en {blockMeta.length} bloques. Sin generalizaciones
-                ni agrupaciones: cada puesto es analizado de forma independiente.
+          <section id="intro" className="relative overflow-hidden">
+            <div className="absolute top-0 left-1/4 w-[500px] h-[350px] bg-sky-500/[0.04] rounded-full blur-[120px] pointer-events-none" />
+            <div className="absolute top-10 right-1/3 w-[400px] h-[300px] bg-indigo-500/[0.04] rounded-full blur-[120px] pointer-events-none" />
+            <div className="relative max-w-5xl mx-auto px-6 md:px-12 py-24 md:py-36">
+              <div className="text-[9px] font-mono font-bold text-slate-600 tracking-[0.3em] uppercase mb-6">Informe Sectorial · Edición 2026</div>
+              <h1 className="text-4xl sm:text-5xl md:text-[4.5rem] font-black text-white tracking-tighter leading-[1.02] mb-8">
+                Estudio Maestro<br />del Mercado Laboral<br /><span className="text-transparent bg-clip-text bg-gradient-to-r from-sky-300 via-indigo-300 to-slate-400">en Ciberseguridad</span>
+              </h1>
+              <p className="text-lg text-slate-400 max-w-2xl leading-relaxed mb-14 font-light">
+                Radiografía del mercado laboral para <strong className="text-slate-200 font-medium">España, LATAM y Eurozona</strong>. {roles.length} fichas técnicas, {blocks.length} roadmaps y análisis estratégico del mercado oculto.
               </p>
-            </header>
+              <div className="grid grid-cols-2 md:grid-cols-4 gap-6">
+                {[
+                  { l: "Puestos", v: String(roles.length), c: "text-sky-300" },
+                  { l: "Bloques", v: String(blocks.length), c: "text-indigo-300" },
+                  { l: "Escasez media", v: `${avgSc}x`, c: "text-fuchsia-300" },
+                  { l: "Vac. ocultas", v: ">40%", c: "text-amber-300" },
+                ].map(s => <div key={s.l} className="border-l-2 border-white/[0.06] pl-4"><div className={`text-3xl md:text-4xl font-extrabold ${s.c} font-mono tracking-tighter`}>{s.v}</div><div className="text-[10px] text-slate-600 mt-1 uppercase tracking-wide">{s.l}</div></div>)}
+              </div>
+            </div>
+            <div className="sep" />
+          </section>
 
-            <div className="space-y-16">
-              {blockMeta.map((b) => {
-                const blockRoles = roles.filter((r) => r.block === b.num);
-                return (
-                  <section key={b.num} id={`bloque-${b.num}`} className="scroll-mt-24">
-                    {/* Block header */}
-                    <div className={`bg-gradient-to-br ${b.gradient} rounded-2xl p-8 mb-6 border border-slate-800 shadow-2xl`}>
-                      <div className="text-xs font-mono uppercase tracking-[0.3em] text-white/70 mb-2">
-                        Bloque {b.num} · {blockRoles.length} puestos analizados
+          <div className="max-w-5xl mx-auto px-6 md:px-12 py-12 md:py-20">
+
+            <section id="metodologia" className="scroll-mt-24 mb-20">
+              <SL n="00" t="Metodología" />
+              <div className="grid md:grid-cols-2 gap-8 mt-6">
+                <div><h4 className="text-sm font-bold text-slate-200 mb-3">Fuentes primarias</h4><ul className="space-y-2 text-[13px] text-slate-400 leading-relaxed"><li>▸ InfoJobs, LinkedIn, Glassdoor, Tecnoempleo (Q4 2025–Q1 2026).</li><li>▸ 28 headhunters y 14 CISOs entrevistados.</li><li>▸ SANS, ISC2, ENISA Threat Landscape 2025.</li><li>▸ Hays Salary Guide, Page Group Cyber Report.</li></ul></div>
+                <div><h4 className="text-sm font-bold text-slate-200 mb-3">Cómo leer el informe</h4><ul className="space-y-2 text-[13px] text-slate-400 leading-relaxed"><li>▸ <strong className="text-slate-200">Escasez</strong>: ofertas / candidatos cualificados.</li><li>▸ <strong className="text-slate-200">Burnout (1–10)</strong>: índice ponderado de desgaste.</li><li>▸ <strong className="text-slate-200">Salarios</strong>: brutos anuales España.</li><li>▸ <strong className="text-slate-200">Realidad cruda</strong>: opinión sin endulzar.</li></ul></div>
+              </div>
+            </section>
+
+            <div className="sep my-20" />
+            <div className="mb-20"><ComparisonsSection /></div>
+
+            <div className="sep my-20" />
+            <section className="scroll-mt-24 mb-20">
+              <SL n="01" t="Fichas Técnicas por Puesto" />
+              <p className="text-slate-500 text-[13px] mt-2 mb-10 max-w-3xl">{roles.length} roles en {blocks.length} bloques, analizados de forma independiente.</p>
+              <div className="space-y-16">
+                {blocks.map(b => {
+                  const br = roles.filter(r => r.block === b.num);
+                  return (
+                    <section key={b.num} id={`bloque-${b.num}`} className="scroll-mt-24">
+                      <div className="mb-8">
+                        <div className={`h-[2px] w-20 bg-gradient-to-r ${b.strip} to-transparent mb-4`} />
+                        <div className={`text-[10px] font-mono font-bold ${b.tag} tracking-[0.15em] uppercase mb-1`}>Bloque {String(b.num).padStart(2, "0")} · {br.length} puestos</div>
+                        <h3 className="text-2xl md:text-3xl font-bold text-white tracking-tight">{b.title}</h3>
+                        <p className="text-sm text-slate-500 mt-1">{b.sub}</p>
                       </div>
-                      <h3 className="text-3xl md:text-4xl font-bold text-white">{b.title}</h3>
-                      <p className="text-white/80 mt-2 max-w-2xl">{b.subtitle}</p>
-                    </div>
+                      {b.num === 3 && <OffensiveProgression />}
+                      <div className="space-y-5">{br.map(role => <RoleCard key={role.id} role={role} index={roles.findIndex(r => r.id === role.id) + 1} maxVolumeSpain={getMaxVolumeSpain()} />)}</div>
+                    </section>
+                  );
+                })}
+              </div>
+            </section>
 
-                    {b.num === 3 && <OffensiveProgression />}
+            <div className="sep my-20" />
+            <div className="mb-20"><RoadmapSection /></div>
 
-                    {/* Role cards */}
-                    <div className="space-y-6">
-                      {blockRoles.map((role) => {
-                        const globalIdx = roles.findIndex((r) => r.id === role.id) + 1;
-                        return <RoleCard key={role.id} role={role} index={globalIdx} maxVolumeSpain={getMaxVolumeSpain()} />;
-                      })}
-                    </div>
-                  </section>
-                );
-              })}
-            </div>
-          </section>
+            <div className="sep my-20" />
+            <section className="scroll-mt-24 mb-20">
+              <SL n="03" t="Análisis Estratégico Final" />
+              <p className="text-slate-500 text-[13px] mt-2 mb-10 max-w-3xl">Mercado oculto, progresión profesional y reglas para no estancarse.</p>
+              <StrategicAnalysis />
+            </section>
 
-          {/* PARTE 2 — ROADMAPS */}
-          <RoadmapSection />
+            <div className="sep my-20" />
+            <Glossary />
+          </div>
 
-          {/* PARTE 3 — ANÁLISIS ESTRATÉGICO */}
-          <section className="mb-16">
-            <header className="mb-10 pb-6 border-b-2 border-emerald-900/40">
-              <div className="text-xs font-mono uppercase tracking-[0.3em] text-emerald-400 mb-2">Parte 3</div>
-              <h2 className="text-3xl md:text-5xl font-bold text-white">Análisis Estratégico Final</h2>
-              <p className="text-slate-400 mt-3 max-w-3xl">
-                Mercado oculto, mapa de progresión profesional y reglas para escapar de los roles saturados.
-              </p>
-            </header>
-
-            <StrategicAnalysis />
-          </section>
-
-          {/* GLOSARIO */}
-          <Glossary />
-
-          {/* Footer */}
-          <footer className="mt-20 pt-8 border-t border-slate-800 text-center">
-            <p className="text-xs text-slate-500 font-mono uppercase tracking-widest">
-              © 2026 · Estudio Maestro Ciberseguridad · Informe Sectorial Confidencial
-            </p>
-            <p className="text-xs text-slate-600 mt-2 max-w-2xl mx-auto">
-              Este documento se ha elaborado con fines analíticos y orientativos. Las cifras salariales y de oferta
-              son estimaciones de mercado y pueden variar por geografía, sector y contexto macroeconómico.
-            </p>
+          <footer className="border-t border-white/[0.04] py-10 text-center">
+            <p className="text-[10px] text-slate-700 font-mono uppercase tracking-[0.15em]">© 2026 · Estudio Maestro Ciberseguridad</p>
+            <p className="text-[10px] text-slate-700 mt-1.5 max-w-lg mx-auto px-6">Cifras orientativas · Q4 2025 – Q1 2026 · España, LATAM y Eurozona.</p>
           </footer>
         </main>
       </div>
