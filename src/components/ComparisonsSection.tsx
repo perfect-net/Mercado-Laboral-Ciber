@@ -1,5 +1,6 @@
 import { roles } from "../data/roles";
 import { VolumeComparison } from "./VolumeComparison";
+import { GrowthComparison } from "./GrowthComparison";
 
 type SR = { id: string; junior: number | null; mid: number | null; senior: number | null };
 const sal: SR[] = [
@@ -82,7 +83,7 @@ export function ComparisonsSection() {
       <div>
         <div className="text-[9px] font-mono font-bold text-slate-500 tracking-[0.25em] uppercase mb-2">Comparativas</div>
         <h2 className="text-3xl md:text-4xl font-bold text-white tracking-tight">Panel Comparativo</h2>
-        <p className="text-slate-400 mt-2 max-w-3xl text-[13px]">Lectura rápida: volumen, salarios, escasez y desgaste.</p>
+        <p className="text-slate-400 mt-2 max-w-3xl text-[13px]">Lectura rápida: volumen, salarios, escasez, desgaste y crecimiento sectorial.</p>
       </div>
       <VolumeComparison />
       <Panel tag="Salarios" title="Salarios España por Nivel" tagColor="text-indigo-400/70">
@@ -98,6 +99,7 @@ export function ComparisonsSection() {
           {sortedBurn.map(r => <CB key={`bu-${r.id}`} label={r.shortName} value={r.burnout} max={10} suffix="/10" barColor={r.burnout >= 8 ? "bg-rose-500/70" : r.burnout >= 6 ? "bg-amber-500/60" : "bg-emerald-500/50"} textColor={r.burnout >= 8 ? "text-rose-300" : r.burnout >= 6 ? "text-amber-300" : "text-emerald-300"} />)}
         </div>
       </Panel>
+      <GrowthComparison />
     </section>
   );
 }
